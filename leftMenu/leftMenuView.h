@@ -10,6 +10,7 @@
 
 @protocol  leftMenuViewDelegate<NSObject>
 
+@optional
 - (void)didSelectIndex:(NSInteger)index;
 
 @end

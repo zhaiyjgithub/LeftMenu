@@ -72,6 +72,7 @@
     for (int i = 0; i<self.menuBtnArray.count; i++) {
         UIButton * btn = self.menuBtnArray[i];
         btn.layer.transform = transform;
+        btn.layer.allowsEdgeAntialiasing = YES;
     }
     
     for (int i = 0; i<self.menuBtnArray.count; i++) {
@@ -83,6 +84,7 @@
     _removeFlag = YES;
     for (int i = 0; i<self.menuBtnArray.count; i++) {
         UIButton * btn = self.menuBtnArray[i];
+        btn.layer.allowsEdgeAntialiasing = YES;
         [btn.layer addAnimation:[self Animation:0.0f toValue:-M_PI_2 beginTime:CACurrentMediaTime() + ANIMATION_DUARTION/self.titlesArray.count * (i) animationValue:[NSString stringWithFormat:@"%d",i]] forKey:nil];
     }
 }
@@ -113,7 +115,9 @@
     NSInteger index = btn.tag - BUTTON_TAG_BEGIN_INDEX;
     [self dismiss];
     if (index) {
-        [self.delegate didSelectIndex:index];
+        if ([self.delegate conformsToProtocol:@protocol(leftMenuViewDelegate)] && [self.delegate respondsToSelector:@selector(didSelectIndex:)]) {
+            [self.delegate didSelectIndex:index];
+        }
     }
 }
 
